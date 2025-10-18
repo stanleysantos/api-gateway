@@ -11,12 +11,19 @@ public class ApiGatewayConfiguration {
     @Bean
     public RouteLocator gatewayRouter(RouteLocatorBuilder builder){
         return builder.routes()
-                .route(p -> p.path("/get")
+                /* exemplos */
+                /*.route(p -> p.path("/get")
                         .filters( f -> f
                                 .addRequestHeader("Hello", "World")
                                 .addRequestParameter("Hello", "World")
                         )
-                        .uri("http://httpbin.org:80"))
+                        .uri("http://httpbin.org:80"))*/
+                .route(p -> p.path("/book-service/**")
+                            .uri("lb://book-service") /*lb: loadbalancer*/
+                )
+                .route(p -> p.path("/exchange-service/**")
+                        .uri("lb://exchange-service") /*lb: loadbalancer*/
+                )
                 .build();
     }
 }
